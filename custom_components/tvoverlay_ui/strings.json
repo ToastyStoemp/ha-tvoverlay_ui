@@ -1,0 +1,210 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up TvOverlay UI",
+        "description": "Enter the connection details for your TvOverlay device.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "name": "Device Name"
+        },
+        "data_description": {
+          "host": "IP address or hostname of the TvOverlay device",
+          "port": "Port number (default: 5001)",
+          "name": "Friendly name for this device"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to TvOverlay device. Please check the host and port.",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "TvOverlay UI Options",
+        "description": "Update the connection settings for your TvOverlay device.",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to TvOverlay device. Please check the host and port.",
+      "unknown": "An unexpected error occurred."
+    }
+  },
+  "entity": {
+    "switch": {
+      "display_clock": {
+        "name": "Display Clock"
+      },
+      "display_notifications": {
+        "name": "Display Notifications"
+      },
+      "display_fixed_notifications": {
+        "name": "Display Fixed Notifications"
+      },
+      "pixel_shift": {
+        "name": "Pixel Shift"
+      },
+      "debug_mode": {
+        "name": "Debug Mode"
+      }
+    },
+    "number": {
+      "clock_visibility": {
+        "name": "Clock Visibility"
+      },
+      "overlay_visibility": {
+        "name": "Overlay Visibility"
+      },
+      "fixed_notifications_visibility": {
+        "name": "Fixed Notifications Visibility"
+      },
+      "notification_duration": {
+        "name": "Notification Duration"
+      }
+    },
+    "button": {
+      "clear_notifications": {
+        "name": "Clear Notifications"
+      }
+    },
+    "sensor": {
+      "active_notification_ids": {
+        "name": "Active Fixed Notifications"
+      }
+    }
+  },
+  "services": {
+    "notify": {
+      "name": "Send Notification",
+      "description": "Send a notification to a TvOverlay device.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Select a configured TvOverlay device."
+        },
+        "host": {
+          "name": "Host",
+          "description": "Manual host:port (e.g., 192.168.1.100:5001). Use if device is not configured."
+        },
+        "title": {
+          "name": "Title",
+          "description": "The notification title."
+        },
+        "message": {
+          "name": "Message",
+          "description": "The notification message."
+        },
+        "smallIcon": {
+          "name": "Small Icon",
+          "description": "MDI icon or image URL. Local paths not supported - must be full URL. Examples: mdi:bell, http://192.168.1.100:8123/local/icon.png"
+        },
+        "smallIconColor": {
+          "name": "Small Icon Color",
+          "description": "Color for the small icon. Use hex (#FF5500) or color name (red, blue, green, etc.)."
+        },
+        "largeIcon": {
+          "name": "Large Icon",
+          "description": "MDI icon or image URL. Local paths not supported - must be full URL. Examples: mdi:account, http://192.168.1.100:8123/local/icon.png"
+        },
+        "mediaType": {
+          "name": "Media Type",
+          "description": "Type of media to display."
+        },
+        "mediaUrl": {
+          "name": "Media URL",
+          "description": "Local paths not supported - must be full URL. Image: http://192.168.1.100:8123/local/image.jpg. Video: rtsp://IP/stream or .m3u8/.mpd URL."
+        },
+        "corner": {
+          "name": "Corner",
+          "description": "Screen corner for the notification."
+        },
+        "duration": {
+          "name": "Duration",
+          "description": "How long to show the notification (in seconds)."
+        }
+      }
+    },
+    "notify_fixed": {
+      "name": "Send Fixed Notification",
+      "description": "Send a persistent fixed notification to a TvOverlay device.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Select a configured TvOverlay device."
+        },
+        "host": {
+          "name": "Host",
+          "description": "Manual host:port (e.g., 192.168.1.100:5001). Use if device is not configured."
+        },
+        "id": {
+          "name": "Notification ID",
+          "description": "Unique ID for this notification (for updates/clearing)."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "MDI icon or image URL. Local paths not supported - must be full URL. Examples: mdi:weather-sunny, http://192.168.1.100:8123/local/icon.png"
+        },
+        "message": {
+          "name": "Message",
+          "description": "The notification message."
+        },
+        "messageColor": {
+          "name": "Message Color",
+          "description": "Color for the message text. Use hex (#FFFFFF) or color name (white, red, etc.)."
+        },
+        "iconColor": {
+          "name": "Icon Color",
+          "description": "Color for the icon. Use hex (#FFFFFF) or color name (white, red, etc.)."
+        },
+        "borderColor": {
+          "name": "Border Color",
+          "description": "Color for the border. Use hex (#FFFFFF) or color name (white, red, etc.)."
+        },
+        "backgroundColor": {
+          "name": "Background Color",
+          "description": "Color for the background. Use hex (#000000) or color name (black, gray, etc.)."
+        },
+        "backgroundOpacity": {
+          "name": "Background Opacity",
+          "description": "Opacity for the background (0-100%)."
+        },
+        "shape": {
+          "name": "Shape",
+          "description": "Notification shape: circle, rounded, or rectangular."
+        },
+        "expiration": {
+          "name": "Expiration",
+          "description": "When to expire. Examples: 1h, 30m, 1h30m, 3600 (seconds)"
+        }
+      }
+    },
+    "clear_fixed": {
+      "name": "Clear Fixed Notification",
+      "description": "Clear a fixed notification by setting it invisible.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Select a configured TvOverlay device."
+        },
+        "host": {
+          "name": "Host",
+          "description": "Manual host:port (e.g., 192.168.1.100:5001). Use if device is not configured."
+        },
+        "id": {
+          "name": "Notification ID",
+          "description": "The ID of the fixed notification to clear."
+        }
+      }
+    }
+  }
+}

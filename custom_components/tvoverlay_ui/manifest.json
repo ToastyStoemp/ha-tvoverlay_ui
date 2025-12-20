@@ -1,0 +1,12 @@
+{
+  "domain": "tvoverlay_ui",
+  "name": "TvOverlay UI",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/gugutab/TvOverlay",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/gugutab/TvOverlay/issues",
+  "requirements": ["aiohttp>=3.8.0"],
+  "version": "1.0.0"
+}
