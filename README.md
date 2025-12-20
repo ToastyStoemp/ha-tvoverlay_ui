@@ -88,7 +88,3 @@ Pull requests welcome.
 [MIT License](LICENSE)
 
 ---
-
-<p align="center">
-  <sub>Not affiliated with the official TvOverlay project.</sub>
-</p>
