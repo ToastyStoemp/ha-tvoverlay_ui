@@ -44,7 +44,6 @@ Please support the original developer by starring the official repository and le
 | | Overlay Visibility | Adjust background overlay opacity (0-95%) |
 | | Fixed Notifications Visibility | Adjust fixed notifications opacity (-1 to 95%) |
 | | Notification Duration | Set default notification duration (1-60 seconds) |
-| **Button** | Clear Notifications | Clear all active notifications |
 | **Sensor** | Active Fixed Notifications | Shows IDs of active fixed notifications |
 
 ### Notification Features
@@ -76,10 +75,12 @@ Please support the original developer by starring the official repository and le
 
 1. Open HACS in Home Assistant
 2. Click the three dots in the top right corner
-3. Select "Custom repositories"
-4. Add this repository URL with category "Integration"
-5. Click "Install"
-6. Restart Home Assistant
+3. Select **Custom repositories**
+4. Add repository URL: `https://github.com/manjotsc/ha-tvoverlay`
+5. Select category: **Integration**
+6. Click **Add**
+7. Search for "TvOverlay UI" and click **Install**
+8. Restart Home Assistant
 
 ### Manual Installation
 
@@ -98,85 +99,6 @@ Please support the original developer by starring the official repository and le
    - **Host**: IP address of your Android TV (e.g., `192.168.1.100`)
    - **Port**: TvOverlay port (default: `5001`)
    - **Device Name**: Friendly name for this device
-
----
-
-## Usage Examples
-
-### Send a Simple Notification
-
-```yaml
-service: tvoverlay_ui.notify
-data:
-  device_id: <your_device_id>
-  title: "Doorbell"
-  message: "Someone is at the door"
-  smallIcon: "mdi:doorbell"
-  duration: 10
-```
-
-### Send a Notification with Image
-
-```yaml
-service: tvoverlay_ui.notify
-data:
-  device_id: <your_device_id>
-  title: "Front Door"
-  message: "Motion detected"
-  smallIcon: "mdi:motion-sensor"
-  mediaType: "image"
-  mediaUrl: "http://192.168.1.100:8123/local/camera_snapshot.jpg"
-  corner: "top_end"
-```
-
-### Create a Weather Widget (Fixed Notification)
-
-```yaml
-service: tvoverlay_ui.notify_fixed
-data:
-  device_id: <your_device_id>
-  id: "weather"
-  icon: "mdi:weather-sunny"
-  message: "72°F"
-  messageColor: "white"
-  iconColor: "gold"
-  backgroundColor: "black"
-  backgroundOpacity: 50
-  shape: "rounded"
-  expiration: "1h"
-```
-
-### Clear a Fixed Notification
-
-```yaml
-service: tvoverlay_ui.clear_fixed
-data:
-  device_id: <your_device_id>
-  id: "weather"
-```
-
-### Automation Example: Doorbell Alert
-
-```yaml
-automation:
-  - alias: "Doorbell TV Notification"
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.doorbell
-        to: "on"
-    action:
-      - service: tvoverlay_ui.notify
-        data:
-          device_id: <your_device_id>
-          title: "Doorbell"
-          message: "Someone is at the door!"
-          smallIcon: "mdi:doorbell-video"
-          smallIconColor: "orange"
-          mediaType: "image"
-          mediaUrl: "http://192.168.1.50/snapshot.jpg"
-          corner: "top_end"
-          duration: 15
-```
 
 ---
 
@@ -206,50 +128,6 @@ automation:
 - This integration uses a "fire and forget" approach - settings are sent but not polled back
 - Entity states show assumed values and may not reflect actual device state if changed externally
 - The TvOverlay app must be running on your Android TV for notifications to work
-
----
-
-## Supported Colors
-
-You can use hex codes (`#FF5500`) or these color names:
-
-| Color | Hex | Color | Hex |
-|-------|-----|-------|-----|
-| red | #FF0000 | cyan | #00FFFF |
-| green | #00FF00 | magenta | #FF00FF |
-| blue | #0000FF | gray/grey | #808080 |
-| white | #FFFFFF | brown | #A52A2A |
-| black | #000000 | navy | #000080 |
-| yellow | #FFFF00 | teal | #008080 |
-| orange | #FFA500 | maroon | #800000 |
-| purple | #800080 | olive | #808000 |
-| pink | #FFC0CB | silver | #C0C0C0 |
-| gold | #FFD700 | coral | #FF7F50 |
-| salmon | #FA8072 | violet | #EE82EE |
-| indigo | #4B0082 | turquoise | #40E0D0 |
-
----
-
-## Troubleshooting
-
-### Cannot Connect to Device
-
-1. Ensure TvOverlay app is installed and running on your Android TV
-2. Verify the IP address is correct
-3. Check that port 5001 (default) is accessible
-4. Ensure your Home Assistant and Android TV are on the same network
-
-### Notifications Not Appearing
-
-1. Check that "Display Notifications" is enabled in TvOverlay settings
-2. Verify the TvOverlay app has overlay permissions on your Android TV
-3. Check Home Assistant logs for any error messages
-
-### Images Not Loading
-
-1. Ensure the image URL is accessible from your Android TV (not just from HA)
-2. Use full URLs, not local paths
-3. Check that the image server allows external access
 
 ---
 
