@@ -81,6 +81,33 @@
       "active_notification_ids": {
         "name": "Active Fixed Notifications"
       }
+    },
+    "select": {
+      "notification_layout": {
+        "name": "Notification Layout",
+        "state": {
+          "Default": "Default",
+          "Minimalist": "Minimalist",
+          "Icon Only": "Icon Only"
+        }
+      },
+      "default_corner": {
+        "name": "Default Corner",
+        "state": {
+          "top_start": "Top Left",
+          "top_end": "Top Right",
+          "bottom_start": "Bottom Left",
+          "bottom_end": "Bottom Right"
+        }
+      },
+      "default_shape": {
+        "name": "Default Shape",
+        "state": {
+          "circle": "Circle",
+          "rounded": "Rounded",
+          "rectangular": "Rectangular"
+        }
+      }
     }
   },
   "services": {

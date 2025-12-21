@@ -194,6 +194,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "store": store,
         "notification_ids": notification_ids,
         "update_listeners": [],
+        "notification_layout": "Default",
+        "default_corner": "top_end",
+        "default_shape": "rounded",
     }
 
     # Set up platforms
@@ -291,6 +294,13 @@ async def _async_register_services(hass: HomeAssistant) -> None:
 
         return None
 
+    def _get_entry_data_from_client(client: TvOverlayApiClient) -> dict[str, Any] | None:
+        """Get the entry data for a client."""
+        for entry_data in hass.data[DOMAIN].values():
+            if entry_data.get("client") is client:
+                return entry_data
+        return None
+
     async def async_notify(call: ServiceCall) -> None:
         """Send a notification."""
         client = _get_client(call.data)
@@ -301,15 +311,12 @@ async def _async_register_services(hass: HomeAssistant) -> None:
             )
             return
 
-        data = _build_notification_data(call.data)
+        entry_data = _get_entry_data_from_client(client)
+        defaults = {
+            "default_corner": entry_data.get("default_corner", "top_end") if entry_data else "top_end",
+        }
+        data = _build_notification_data(call.data, defaults)
         await client.send_notification(data)
-
-    def _get_entry_data_from_client(client: TvOverlayApiClient) -> dict[str, Any] | None:
-        """Get the entry data for a client."""
-        for entry_data in hass.data[DOMAIN].values():
-            if entry_data.get("client") is client:
-                return entry_data
-        return None
 
     async def _add_notification_id(entry_data: dict[str, Any], notification_id: str) -> None:
         """Add a notification ID to storage and notify listeners."""
@@ -341,7 +348,11 @@ async def _async_register_services(hass: HomeAssistant) -> None:
             )
             return
 
-        data = _build_fixed_notification_data(call.data)
+        entry_data = _get_entry_data_from_client(client)
+        defaults = {
+            "default_shape": entry_data.get("default_shape", "rounded") if entry_data else "rounded",
+        }
+        data = _build_fixed_notification_data(call.data, defaults)
         success = await client.send_fixed_notification(data)
 
         # Store the notification ID if successful and ID was provided
@@ -380,9 +391,10 @@ async def _async_register_services(hass: HomeAssistant) -> None:
     )
 
 
-def _build_notification_data(data: dict[str, Any]) -> dict[str, Any]:
+def _build_notification_data(data: dict[str, Any], defaults: dict[str, Any] | None = None) -> dict[str, Any]:
     """Build notification payload from service call data."""
     payload: dict[str, Any] = {}
+    defaults = defaults or {}
 
     # Simple string fields
     simple_fields = {
@@ -390,13 +402,18 @@ def _build_notification_data(data: dict[str, Any]) -> dict[str, Any]:
         ATTR_TITLE: "title",
         ATTR_MESSAGE: "message",
         ATTR_SOURCE: "source",
-        ATTR_CORNER: "corner",
         ATTR_DURATION: "duration",
     }
 
     for attr, api_key in simple_fields.items():
         if attr in data and data[attr] is not None:
             payload[api_key] = data[attr]
+
+    # Corner - use default if not specified
+    if ATTR_CORNER in data and data[ATTR_CORNER] is not None:
+        payload["corner"] = data[ATTR_CORNER]
+    elif defaults.get("default_corner"):
+        payload["corner"] = defaults["default_corner"]
 
     # Small icon
     if ATTR_SMALL_ICON in data and data[ATTR_SMALL_ICON]:
@@ -423,22 +440,28 @@ def _build_notification_data(data: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
-def _build_fixed_notification_data(data: dict[str, Any]) -> dict[str, Any]:
+def _build_fixed_notification_data(data: dict[str, Any], defaults: dict[str, Any] | None = None) -> dict[str, Any]:
     """Build fixed notification payload from service call data."""
     payload: dict[str, Any] = {}
+    defaults = defaults or {}
 
     # Simple fields
     simple_fields = {
         ATTR_ID: "id",
         ATTR_VISIBLE: "visible",
         ATTR_MESSAGE: "message",
-        ATTR_SHAPE: "shape",
         ATTR_EXPIRATION: "expiration",
     }
 
     for attr, api_key in simple_fields.items():
         if attr in data and data[attr] is not None:
             payload[api_key] = data[attr]
+
+    # Shape - use default if not specified
+    if ATTR_SHAPE in data and data[ATTR_SHAPE] is not None:
+        payload["shape"] = data[ATTR_SHAPE]
+    elif defaults.get("default_shape"):
+        payload["shape"] = defaults["default_shape"]
 
     # Icon
     if ATTR_ICON in data and data[ATTR_ICON]:

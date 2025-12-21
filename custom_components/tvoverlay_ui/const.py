@@ -44,7 +44,7 @@ VALID_SHAPES: Final = [
 ]
 
 # Platforms
-PLATFORMS: Final = ["switch", "number", "button", "sensor"]
+PLATFORMS: Final = ["switch", "number", "button", "sensor", "select"]
 
 # Storage
 STORAGE_KEY: Final = "tvoverlay_ui_notification_ids"
