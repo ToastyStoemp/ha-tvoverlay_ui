@@ -53,7 +53,7 @@ Copy `custom_components/tvoverlay_ui` to your HA config directory and restart.
 | Service | Description |
 |:--------|:------------|
 | `tvoverlay_ui.notify` | Send a notification |
-| `tvoverlay_ui.notify_fixed` | Create a persistent widget |
+| `tvoverlay_ui.notify_fixed` | Create a persistent widget (ID required) |
 | `tvoverlay_ui.clear_fixed` | Remove a widget by ID |
 
 ### Controls
@@ -62,8 +62,9 @@ Copy `custom_components/tvoverlay_ui` to your HA config directory and restart.
 |:-----|:---------|
 | **Switches** | Display Clock, Display Notifications, Display Fixed Notifications, Pixel Shift, Debug Mode |
 | **Sliders** | Clock Visibility, Overlay Visibility, Fixed Notifications Visibility, Notification Duration |
-| **Selects** | Preset, Hot Corner, Default Shape |
+| **Selects** | Hot Corner, Default Shape |
 | **Sensors** | Active Fixed Notifications |
+| **Binary Sensors** | Connectivity (online/offline status) |
 
 ---
 
@@ -73,8 +74,9 @@ Copy `custom_components/tvoverlay_ui` to your HA config directory and restart.
 |:-----|:-----------|
 | **Media** | Local paths not supported — use full URLs only |
 | **Video** | Only RTSP, HLS (.m3u8), DASH (.mpd) — no MP4 |
-| **Tracking** | Only tracks notifications created via Home Assistant |
-| **State** | Entity states are assumed, not polled from device |
+| **Tracking** | Only tracks fixed notifications created via Home Assistant |
+
+> **Note**: Entity states are polled from the device every 30 seconds.
 
 ---
 
