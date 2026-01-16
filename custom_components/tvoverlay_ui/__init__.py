@@ -162,7 +162,7 @@ NOTIFY_SCHEMA = vol.Schema(
             vol.Optional(ATTR_SMALL_ICON_COLOR): cv.string,
             vol.Optional(ATTR_LARGE_ICON): cv.string,
             vol.Optional(ATTR_MEDIA_TYPE): vol.In(["none", "image", "video"]),
-            vol.Optional(ATTR_MEDIA_URL): cv.url,
+            vol.Optional(ATTR_MEDIA_URL): cv.Any,
             vol.Optional(ATTR_CORNER): vol.In(VALID_CORNERS),
             vol.Optional(ATTR_DURATION): cv.positive_int,
         },
